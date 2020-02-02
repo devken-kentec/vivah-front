@@ -1,0 +1,77 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Listagem</li>
+    </ol>
+  </nav>
+  
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Lista de ficha financeira
+      </h1>
+    </div>
+    <div class="col-md">
+      <a routerLink="new" class="btn btn-success float-right">
+        <i class="fas fa-user-plus"></i> Cadastrar Ficha Financeira
+      </a>
+    </div>
+  </div>
+  <div  *ngIf="mostrarMens"   class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span> Registro excluido com sucesso! </span>
+   </div>
+   <div class="col-12">
+    <table class="table table-hover" *ngIf="mensalidades else loading">
+      <thead>
+        <tr class="bg-primary text-light">
+          <th>#</th>
+          <th>Nome/Login</th>
+          <th>CPF</th>
+          <th>Data da geração</th>
+          <th>Dia do vencimento</th>
+          <th>Valor mensal</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mensalidade of mensalidades">
+          <td>
+            <strong>{{mensalidade.id}}</strong>
+          </td>
+          <td>
+            <strong>{{mensalidade.nome}}</strong><br>
+            <small>{{mensalidade.login}}</small>
+          </td>
+          <td>
+              {{this.formatarCpf(mensalidade.cpf)}}
+          </td>
+          <td style="text-align: center;">
+              {{mensalidade.data_geracao | date: 'dd/MM/yyyy'}}
+          </td>
+          <td style="text-align: center;">
+              {{mensalidade.dia_vencimento | number }}
+         </td>
+         <td style="text-align: right;">
+         R$ {{mensalidade.valor_mensal.replace(".", ",") }}
+        </td>
+          <td>
+            <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
+            <button (click)="onEdit(mensalidade.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
+            <button (click)="onDelete(mensalidade.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+   </div>
+  <div class="card-body">
+    <ng-template #loading>
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </ng-template>
+  </div>
+</div>

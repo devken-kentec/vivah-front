@@ -1,0 +1,37 @@
+{
+  "cadastro": [
+  
+    {
+      "id": 5,
+      "nome": "Arya Stark",
+      "cpf": "12345678910",
+      "data_nasc": "2017-10-18",
+      "fone": "2222222222",
+      "fone_cel": "123456789",
+      "fone_cel2": "741852145",
+      "sexo": "Feminino",
+      "endereco": null,
+      "email": null,
+      "tipo_user": "Administrador",
+      "status_mat": "Ativo",
+      "login": "bbcat",
+      "senha": "123"
+    },
+    {
+      "id": 6,
+      "nome": "Maria da Silva",
+      "cpf": "01285245878",
+      "data_nasc": "1975-08-21",
+      "fone": "62930212541",
+      "fone_cel": "6285412575",
+      "fone_cel2": "6212524585",
+      "sexo": "Feminino",
+      "endereco": "rua das acacias ",
+      "email": "llll@gmail.com",
+      "tipo_user": "Aluno",
+      "status_mat": "Ativo",
+      "login": "maria",
+      "senha": "123"
+    }
+  ]
+}

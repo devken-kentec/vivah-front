@@ -1,0 +1,112 @@
+<div class="col-12">
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+        <li class="breadcrumb-item"><a routerLink="/mensalidade">Listagem</a></li>
+        <li class="breadcrumb-item active">Ficha Financeira</li>
+      </ol>
+    </nav>
+    
+    <div class="row mb-4">
+      <div class="col-md">
+        <h1 class="h2 border-left pl-2">
+          Ficha financeira dos alunos
+        </h1>
+      </div>
+      <div class="col-md">
+        <a routerLink="/mensalidade" class="btn btn-warning float-right">
+          <i class="fas fa-backward"></i>&nbsp;Voltar
+        </a>
+    </div>
+    </div>
+    <div *ngIf="mostrarMens" class="alert alert-success" role="alert">
+      Operação realizada com sucesso!!!
+    </div>
+    <form [formGroup]="mensForm">
+        <div class="card">
+            <div class="card-header">
+                Ficha para Informações financeiras dos alunos!
+            </div>
+            <div class="card-body">
+                <div class="form-row col-md-12">
+                    <div class="form-group col-md-1">
+                      <label for="mat">Matrícula:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="mat"
+                        formControlName="matricula"
+                      />
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="login">Login.:</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="login"
+                        formControlName="login"
+                        />
+                    </div>
+                    <div class="form-group col-md-8" style="margin-top: 36px">
+                      <button (click)="incluirUser()" class="btn btn-outline-info btn-sm "><i class="fas fa-search"></i>&nbsp;Buscar</button>
+                    </div>
+                  </div>
+                  <div class="border-top" *ngIf="mostrar">
+                    <div class="form-row col-md-12 mt-3" >
+                        <div class="form-group col-md-2">
+                          <label for="ff">Ficha Financeira N.º:</label>
+                          <input style="color: red; font-weight: bold; text-align: center;" type="text" class="form-control" id="ff" formControlName="id" readonly/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="name">Nome do aluno:</label>
+                            <input style="color: blue; font-weight: bold; text-align: center;" type="text" class="form-control" id="nomeAluno" formControlName="nome" readonly/>                     
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_cpf">CPF:</label>
+                            <input type="text" class="form-control" id="_cpf" formControlName="cpf" style="text-align: right;" readonly/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="dataGeracao">Data da geração:</label>
+                            <input type="date" class="form-control" id="dataGeracao" formControlName="data_geracao" style="text-align: center;"/>
+                        </div>
+                        <div class="form-row col-md-12">
+                            <div class="form-group col-md-2">
+                                <label for="dV">Dia do vencimento:</label>
+                                    <input type="number" class="form-control" id="dV" formControlName="dia_vencimento" style="text-align: right;"/>    
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="rv">Valor mensal:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">R$</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="rv" formControlName="valor_mensal" style="text-align: right;"/>
+                                </div>    
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="situacao">Situação:</label>
+                                <select
+                                  id="situacao"
+                                  class="form-control"
+                                  formControlName="status_ff"
+                                >
+                                  <option>Ativo</option>
+                                  <option>Inativo</option>
+                                </select>
+                              </div>
+                        </div>
+                      </div> 
+                  </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-12">
+          <button (click)="onSubmit()" class="btn btn-success float-right mt-3">
+            <i class="fas fa-save"></i> &nbsp; Salvar
+          </button>
+        </div>
+    <pre>
+        {{ mensForm.value | json }}  
+      </pre>
+</div>

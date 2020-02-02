@@ -1,0 +1,12 @@
+  http://localhost:3000/cadastro
+
+
+####
+PUT http://localhost:3000/cadastro/4
+
+
+
+  #######
+
+  GET http://localhost:3000/cadastro/6
+

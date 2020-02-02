@@ -1,0 +1,64 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Listagem</li>
+    </ol>
+  </nav>
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Listagem de alunos
+      </h1>
+    </div>
+    <div class="col-md">
+      <a routerLink="new" class="btn btn-success float-right">
+        <i class="fas fa-user-plus"></i> Novo Aluno
+      </a>
+    </div>
+  </div>
+  <div *ngIf ="mostrarMens" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span> Registro excluido com sucesso! </span>
+   </div>
+  <div class="col-md-12">
+    <table class="table table-hover" *ngIf="cadastros else loading">
+      <thead>
+        <tr class="bg-primary text-light">
+          <th>#</th>
+          <th>Nome/Login</th>
+          <th>Telefone</th>
+          <th>Zap</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cadastro of cadastros">
+          <td>
+            <strong>{{cadastro.id}}</strong>
+          </td>
+          <td>
+            <strong>{{cadastro.nome}}</strong><br>
+            <small>{{cadastro.login}}</small>
+          </td>
+          <td>{{cadastro.fone}}</td>
+          <td>{{cadastro.fone_cel}}</td>
+          <td>
+            <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
+            <button (click)="onEdit(cadastro.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
+            <button (click)="onDelete(cadastro.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-body">
+    <ng-template #loading>
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </ng-template>
+  </div>
+</div>

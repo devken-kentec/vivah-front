@@ -1,0 +1,178 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Inclusão de exercícios</li>
+    </ol>
+  </nav>
+
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Lista de exercícios por alunos
+      </h1>
+    </div>
+    <div class="col-md">
+      <a routerLink="/fichatecnica" class="btn btn-warning float-right">
+        << Voltar
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      Hora de vincular a ficha técnica do aluno com seus respctivos exercícios!
+    </div>
+    <div class="card-body">
+      <form [formGroup]="listExerForm">
+        <div class="form-group col-md-12">
+          <div class="row">
+          <div class="form-group col-md-6">
+            <div class="form-row col-12">
+              <div class="form-group col-md-6">
+                <label for="mat">Cód. ficha técnica:</label>
+                <input
+                style="color: red; font-weight: bold; font-size:14pt; text-align: center;"
+                  type="text"
+                  class="form-control"
+                  id="mat"
+                  formControlName="id"
+                  readonly
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="data">Data da avaliação:</label>
+                <input
+                style="color: green; font-weight: bold; font-size:14pt; text-align: center;"
+                  type="date"
+                  class="form-control"
+                  id="data"
+                  formControlName="data_avaliacao"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-row col-12">
+              <div class="form-group col-md-12">
+                <label for="log">Login:</label>
+                <input
+                style="color: green; font-weight: bold; font-size:14pt; text-align: center;"
+                  type="text"
+                  class="form-control"
+                  id="log"
+                  formControlName="login"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-row col-12">
+              <div class="form-group col-md-12">
+                <label for="nomeAluno">Nome do aluno(a):</label>
+                <input
+                style="color: blue; font-weight: bold; font-size:14pt; text-align: center;"
+                  type="text"
+                  class="form-control"
+                  id="nomeAluno"
+                  formControlName="nome"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <div class="form-row col-12">
+              <div class="form-group col-md-5">
+                <label for="diaTreino">Dia de treino:</label>
+                <select class="form-control" id="diaTreino" formControlName="dia_treino">
+                  <option selected>Nenhum</option>
+                  <option>Segunda</option>
+                  <option>Terça</option>
+                  <option>Quarta</option>
+                  <option>Quinta</option>
+                  <option>Sexta</option>
+                  <option>Sábado</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row col-12">
+              <div class="form-group col-md-9">
+                <label for="comboExer">Lista de Exercícios:</label>
+                <select class="form-control" id="comboExer" formControlName="id_exercicio">
+                  <option *ngFor="let exercicio of exercicios" [value]="exercicio.id">{{exercicio.nome}}</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <button 
+                   data-toggle="modal" 
+                   data-target="#ExemploModalCentralizado"
+                   class="btn btn-success float-right"
+                   style="margin-top: 32px;"
+                   (click)="buscaExercicio()">
+                   <i class="fas fa-plus-circle"></i>&nbsp;Incluir
+                </button>
+              </div>
+            </div>
+            <div class="form-row col-12">
+              <table class="table table-hover" >
+                <thead>
+                  <tr class="bg-primary text-light">
+                    <th>Exercício</th>
+                    <th>Dia do treino</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let listaExer of listasExercicio">
+                    <td><small>{{listaExer.nome}}</small></td>
+                    <td><small>{{listaExer.dia_treino}}</small></td>
+                    <td>
+                      <button (click)="onDelete(listaExer.id)" class="btn btn-outline-danger btn-sm">
+                        <i class="far fa-trash-alt"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+      </form>
+
+     <!-- Modal -->
+    <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="TituloModalCentralizado">Confirmar a inclusão do exercício?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+            <div class="modal-body" style="font-weight: bold;">
+            Código do exercício: <span style="color: red">{{ codExer }}</span><br> 
+            Nome do exercício: <span style="color: blue">{{ nomeExer }}</span><br>
+            Nível do exercício: <span style="color: blue">{{ nivelExer }}</span><br>
+            Modalidade do exercício: <span style="color: blue">{{ modExer }}</span><br>
+            Tipo do exercício: <span style="color:  blue">{{ tipoExer }}</span><br>
+            Função do exercício: <span style="color:  blue">{{ funcaoExer }}</span><br>
+          </div>
+          <div class="col-md-12">
+            <div class="col-10" style="text-align: center;" *ngIf ="mostrarMens" class="alert alert-success" role="alert">
+              Operação realizada com sucesso!!!
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="close()" data-dismiss="modal"><i class="fas fa-window-close"></i>&nbsp;Fechar</button>
+            <button type="button" class="btn btn-success" (click)="onSumit()"> <i class="fas fa-save"></i> &nbsp;Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <pre>
+    {{ listExerForm.value | json }}  
+  </pre>
+</div>

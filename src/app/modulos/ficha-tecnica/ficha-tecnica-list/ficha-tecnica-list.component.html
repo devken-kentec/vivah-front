@@ -1,0 +1,102 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Listagem</li>
+    </ol>
+  </nav>
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Lista de fichas técnicas
+      </h1>
+    </div>
+    <div class="col-md">
+      <a routerLink="new" class="btn btn-success float-right">
+        <i class="fas fa-user-plus"></i> Cadastrar Ficha Técnica 
+      </a>
+    </div>
+  </div>
+  
+    <form [formGroup]="ficTecListForm">
+      <div class="form-row col-md-12  d-flex justify-content-end d-flex align-items-center ">
+        <div class="form-group col-md-3 ">
+          <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="login"
+            formControlName="login"
+            placeholder="Pesquisar"
+            (input)="buscaAluno()"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </form>
+  
+  <div *ngIf ="mostrarMens" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <span> Registro excluido com sucesso! </span>
+   </div>
+   <div class="col-12">
+    <table class="table table-hover" *ngIf="fichasTecnica else loading">
+      <thead>
+        <tr class="bg-primary text-light">
+          <th>#</th>
+          <th>Nome</th>
+          <th>Data da Avaliação</th>
+          <th>Entrada</th>
+          <th>Saída</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fichaTecnica of fichasTecnica">
+          <td>
+            <strong>{{fichaTecnica.id}}</strong><br>
+            <small>Login-></small><br>
+            <small>Dias de treino-></small> 
+          </td>
+          <td>
+            <strong>{{fichaTecnica.nome}}</strong><br>
+            <small>{{fichaTecnica.login}}</small><br>
+            <small>Segunda: {{fichaTecnica.seg}}</small>
+            <small>Terça: {{fichaTecnica.ter}}</small>
+            <small>Quarta: {{fichaTecnica.qua}}</small>
+            <small>Quinta: {{fichaTecnica.qui}}</small>
+            <small>Sexta: {{fichaTecnica.sex}}</small>
+            <small>Sábado: {{fichaTecnica.sab}}</small>
+          </td>
+          <td>
+              {{fichaTecnica.data_avaliacao | date: 'dd/MM/yyyy'}}
+          </td>
+          <td>
+              {{fichaTecnica.hora_entrada}}
+          </td>
+          <td>
+              {{fichaTecnica.hora_saida}}
+         </td>
+          <td>
+            <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
+            <button (click)="onEdit(fichaTecnica.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
+            <button (click)="onDelete(fichaTecnica.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>  
+   </div>
+    <div class="card-body">
+    <ng-template #loading>
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </ng-template>
+  </div>
+</div>

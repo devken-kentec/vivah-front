@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center col-12" style="margin-top: 10%;">
+<form  [formGroup]="loginForm">
+  <div class="card">
+    <div class="card-header text-center">
+    <b>Entre com o seu login e senha.</b> 
+    </div>
+    <div class="card-body">
+      <div class="text-center">
+        <img src="/assets/vivah.jpg" >
+      </div>
+      <div class="form-row col-md-12">
+        <div class="form-group col-md-12">
+          <!--<label for="login">Login:</label>-->
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fas fa-user"></i></span>
+            </div>
+             <input formControlName="login" type="text" class="form-control" id="login" style="text-align: center;" placeholder="LOGIN"/>
+          </div>
+        </div>
+      </div>
+      <div class="form-row col-md-12">
+        <div class="form-group col-md-12">
+       <!--<label for="senha">Senha:</label>-->  
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-key"></i></span>
+          </div>
+            <input  formControlName="senha" type="password" class="form-control" id="senha" style="text-align: center;" placeholder="SENHA"/>
+        </div>
+        </div>
+      </div>
+      <div class="form-row d-flex justify-content-center col-12">
+        <button type="submit" (click)="fazerLogin()" class="btn btn-success  col-md-6">Entrar &nbsp;<i class="fas fa-sign-in-alt"></i></button>
+    </div>
+    </div>
+  </div>
+</form>
+</div>
+
+
