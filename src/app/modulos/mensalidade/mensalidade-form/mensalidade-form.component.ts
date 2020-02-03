@@ -2,7 +2,7 @@ import { MensalidadeService } from './../shared/mensalidade.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SelectsService } from '../../selects/selects.service';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mensalidade-form',
@@ -17,9 +17,13 @@ export class MensalidadeFormComponent implements OnInit {
   
   constructor(private fb: FormBuilder,
               private _selectService: SelectsService,
-              private mensalidadeService: MensalidadeService) { }
+              private mensalidadeService: MensalidadeService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    const routeParams = this.route.snapshot.params;
+    console.log(routeParams.id);
 
     this.mensForm = this.fb.group({
       matricula: ['',[]],
@@ -33,6 +37,18 @@ export class MensalidadeFormComponent implements OnInit {
       status_ff: ['',[]],
       id_aluno: ['',[]],
     });
+
+    this.mensalidadeService.loadById(routeParams.id).subscribe((mensalidade:any)=>{
+      console.log(mensalidade),
+      this.mostrar = true,
+      this.updateFicFinForm(mensalidade),
+      this.mensForm.get("id_aluno").setValue(mensalidade.matricula)
+    }
+    );
+  }
+
+  updateFicFinForm(mensalidade){
+    this.mensForm.patchValue(mensalidade);
   }
 
   incluirUser(){

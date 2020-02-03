@@ -1,6 +1,7 @@
 import { MensalidadeService } from './../shared/mensalidade.service';
 import { Mensalidade } from './../shared/mensalidade';
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mensalidade-list',
@@ -13,12 +14,18 @@ export class MensalidadeListComponent implements OnInit {
   mensalidades: Mensalidade[];
   mostrarMens: boolean = false;
 
-  constructor(private mensalidadeService: MensalidadeService) { }
+  constructor(private mensalidadeService: MensalidadeService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.mensalidadeService.list().subscribe(
       dados=>this.mensalidades = dados
     );
+  }
+
+  onEdit(id){
+    this.router.navigate(['editar', id], {relativeTo: this.route});
   }
 
   formatarCpf(cpf){

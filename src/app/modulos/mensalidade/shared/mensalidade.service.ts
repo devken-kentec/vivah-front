@@ -20,6 +20,12 @@ export class MensalidadeService {
     );
   }
 
+  loadById(id: number){
+    return this.http.get(`${this.api}fic_fin_sel.php?id=${id}`).pipe(
+      tap(console.log),
+      take(1));
+  }
+
   private update(mensalidade){
     return this.http.put(`${this.api}fic_fin_ed.php?id=${mensalidade.id}`, JSON.stringify(mensalidade)).pipe(
       tap(console.log),
