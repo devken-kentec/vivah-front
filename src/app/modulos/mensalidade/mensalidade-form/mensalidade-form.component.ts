@@ -14,6 +14,7 @@ export class MensalidadeFormComponent implements OnInit {
   mensForm: FormGroup;
   mostrar: boolean = false;
   mostrarMens: boolean = false;
+  mostBtnParc: boolean = false;
   
   constructor(private fb: FormBuilder,
               private _selectService: SelectsService,
@@ -42,6 +43,7 @@ export class MensalidadeFormComponent implements OnInit {
       console.log(mensalidade),
       this.mostrar = true,
       this.updateFicFinForm(mensalidade),
+      this.mostBtnParc = true,
       this.mensForm.get("id_aluno").setValue(mensalidade.matricula)
     }
     );
