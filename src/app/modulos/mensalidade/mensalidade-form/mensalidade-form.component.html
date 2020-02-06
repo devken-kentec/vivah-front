@@ -167,7 +167,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="TituloModalCentralizado">
-                      Confirmar a inclusão do exercício?
+                      Dados da parcela.
                     </h5>
                     <button
                       type="button"
@@ -179,24 +179,122 @@
                     </button>
                   </div>
                   <div class="modal-body" style="font-weight: bold;">
-                    Código do exercício:
-                    <span style="color: red">{{ codExer }}</span
-                    ><br />
-                    Nome do exercício:
-                    <span style="color: blue">{{ nomeExer }}</span
-                    ><br />
-                    Nível do exercício:
-                    <span style="color: blue">{{ nivelExer }}</span
-                    ><br />
-                    Modalidade do exercício:
-                    <span style="color: blue">{{ modExer }}</span
-                    ><br />
-                    Tipo do exercício:
-                    <span style="color:  blue">{{ tipoExer }}</span
-                    ><br />
-                    Função do exercício:
-                    <span style="color:  blue">{{ funcaoExer }}</span
-                    ><br />
+                    <form [formGroup]="parcForm">
+                      <div class="form-row col-md-12">
+                        <div class="form-group col-md-6">
+                          <label for="dataPagamento">Data do pagamento:</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="dataPagamento"
+                            formControlName="data_pagamento"
+                            style="text-align: center;"
+                          />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="vl">Valor:</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">R$</span>
+                            </div>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="vl"
+                              formControlName="valor"
+                              style="text-align: right;"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row col-md-12">
+                        <div class="form-group col-md-6">
+                          <label for="jr">Juros:</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">R$</span>
+                            </div>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="jr"
+                              formControlName="juros"
+                              style="text-align: right;"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="dc">Descontos:</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">R$</span>
+                            </div>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="dc"
+                              formControlName="descontos"
+                              style="text-align: right;"
+                              (blur)="valorTotal()"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row col-md-12">
+                        <div class="form-group col-md-6">
+                          <label for="vt">Valor Total:</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">R$</span>
+                            </div>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="vt"
+                              formControlName="valor_total"
+                              style="text-align: right;"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="tp">Tipo de pagamento:</label>
+                          <select
+                            id="tp"
+                            class="form-control"
+                            formControlName="tipo_pagamento"
+                          >
+                            <option>Dinheiro</option>
+                            <option>Débito</option>
+                            <option>Crédito</option>
+                            <option>Cheque</option>
+                            <option>Transferência</option>
+                            <option>Outros</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-row col-md-12">
+                        <div class="form-group col-md-12">
+                          <label for="_obs">Obs.:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="_obs"
+                            formControlName="obs"
+                          />
+                        </div>
+                        <div class="form-row col-md-12">
+                          <div class="form-group col-md-12">
+                            <button
+                             type="button"
+                              class="btn btn-danger col-md-12"
+                              (click)="mudaStatuaPag()"
+                          >
+                           {{statusPag}}
+                          </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                   <div class="col-md-12">
                     <div
@@ -240,9 +338,18 @@
         <i class="fas fa-save"></i> &nbsp; Salvar
       </button>
     </div>
-    <pre>
-        {{ mensForm.value | json }}  
-      </pre
-    >
+    <div class="col-12">
+      <div class="col-6">
+        <pre>
+          {{ mensForm.value | json }}  
+        </pre>
+      </div>
+      <div class="col-6">
+        <pre>
+          {{ parcForm.value | json }}  
+        </pre>
+      </div>
+    </div>
+    
   </div>
 </div>

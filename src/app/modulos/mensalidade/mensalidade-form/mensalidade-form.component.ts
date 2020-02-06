@@ -12,9 +12,11 @@ import { ActivatedRoute } from '@angular/router';
 export class MensalidadeFormComponent implements OnInit {
 
   mensForm: FormGroup;
+  parcForm: FormGroup;
   mostrar: boolean = false;
   mostrarMens: boolean = false;
   mostBtnParc: boolean = false;
+  statusPag: string = "A receber";
   
   constructor(private fb: FormBuilder,
               private _selectService: SelectsService,
@@ -39,14 +41,46 @@ export class MensalidadeFormComponent implements OnInit {
       id_aluno: ['',[]],
     });
 
+    this.parcForm = this.fb.group({
+      id: ['',[]],
+      data_pagamento: ['',[]],
+      valor: ['',[]],
+      juros: ['',[]],
+      descontos: ['',[]],
+      valor_total: ['',[]],
+      tipo_pagamento: ['',[]],
+      status_parc: ['',[]],
+      obs: ['',[]],
+      id_ficha_financeira: ['',[]],
+    });
+
+    this.parcForm.get("status_parc").setValue(this.statusPag);
+
     this.mensalidadeService.loadById(routeParams.id).subscribe((mensalidade:any)=>{
       console.log(mensalidade),
       this.mostrar = true,
       this.updateFicFinForm(mensalidade),
       this.mostBtnParc = true,
-      this.mensForm.get("id_aluno").setValue(mensalidade.matricula)
+      this.mensForm.get("id_aluno").setValue(mensalidade.matricula),
+      this.parcForm.get("valor").setValue(mensalidade.valor_mensal),
+      this.parcForm.get("id_ficha_financeira").setValue(mensalidade.id)
     }
     );
+  }
+
+  mudaStatuaPag(){
+    this.statusPag ="Pago";
+    this.parcForm.get("status_parc").setValue(this.statusPag);
+  }
+
+  valorTotal(){
+   let valor: number = this.parcForm.get("valor").value;   
+   let juros: number = this.parcForm.get("juros").value;
+   let descontos: number = this.parcForm.get("descontos").value;
+
+   let valorTotal = valor+juros-descontos;
+  
+    this.parcForm.get("valor_total").setValue(valorTotal);
   }
 
   updateFicFinForm(mensalidade){
@@ -62,6 +96,7 @@ export class MensalidadeFormComponent implements OnInit {
       }
     );
   }
+
   buscaUser(dados){
     this.mensForm.patchValue(dados);
   }
