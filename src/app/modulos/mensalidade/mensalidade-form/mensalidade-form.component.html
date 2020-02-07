@@ -285,7 +285,7 @@
                         <div class="form-row col-md-12">
                           <div class="form-group col-md-12">
                             <button
-                             type="button"
+                           
                               class="btn btn-danger col-md-12"
                               (click)="mudaStatuaPag()"
                           >
@@ -317,17 +317,61 @@
                       <i class="fas fa-window-close"></i>&nbsp;Fechar
                     </button>
                     <button
-                      type="button"
+                      
                       class="btn btn-success"
-                      (click)="onSumit()"
+                      (click)="onSubmitParc()"
                     >
-                      <i class="fas fa-save"></i> &nbsp;Salvar
+                      <i class="fas fa-save"></i> &nbsp;Incluir
                     </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="col-12">
+            <table class="table table-hover" >
+              <thead>
+                <tr class="bg-primary text-light">
+                  <th>#</th>
+                  <th>Data do pagamento</th>
+                  <th>Valor</th>
+                  <th>Juros</th>
+                  <th>Descontos</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let parcela of parcelas">
+                  <td>
+                    <strong>{{mensalidade.id}}</strong>
+                  </td>
+                  <td>
+                    <strong>{{mensalidade.nome}}</strong><br>
+                    <small>{{mensalidade.login}}</small>
+                  </td>
+                  <td>
+                      {{this.formatarCpf(mensalidade.cpf)}}
+                  </td>
+                  <td style="text-align: center;">
+                      {{mensalidade.data_geracao | date: 'dd/MM/yyyy'}}
+                  </td>
+                  <td style="text-align: center;">
+                      {{mensalidade.dia_vencimento | number }}
+                 </td>
+                 <td style="text-align: right;">
+                 R$ {{mensalidade.valor_mensal.replace(".", ",") }}
+                </td>
+                  <td>
+                    <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
+                    <button (click)="onEdit(mensalidade.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
+                    <button (click)="onDelete(mensalidade.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+           </div>
+
         </div>
       </div>
     </div>

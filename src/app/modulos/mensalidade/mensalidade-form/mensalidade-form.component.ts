@@ -17,6 +17,7 @@ export class MensalidadeFormComponent implements OnInit {
   mostrarMens: boolean = false;
   mostBtnParc: boolean = false;
   statusPag: string = "A receber";
+ 
   
   constructor(private fb: FormBuilder,
               private _selectService: SelectsService,
@@ -54,19 +55,23 @@ export class MensalidadeFormComponent implements OnInit {
       id_ficha_financeira: ['',[]],
     });
 
-    this.parcForm.get("status_parc").setValue(this.statusPag);
-
+    
     this.mensalidadeService.loadById(routeParams.id).subscribe((mensalidade:any)=>{
       console.log(mensalidade),
       this.mostrar = true,
       this.updateFicFinForm(mensalidade),
       this.mostBtnParc = true,
       this.mensForm.get("id_aluno").setValue(mensalidade.matricula),
-      this.parcForm.get("valor").setValue(mensalidade.valor_mensal),
       this.parcForm.get("id_ficha_financeira").setValue(mensalidade.id)
+      //this.parcForm.get("valor").setValue(mensalidade.valor_mensal)
+
     }
     );
+    
+    this.parcForm.get("status_parc").setValue(this.statusPag);
   }
+
+  
 
   mudaStatuaPag(){
     this.statusPag ="Pago";
@@ -74,11 +79,11 @@ export class MensalidadeFormComponent implements OnInit {
   }
 
   valorTotal(){
-   let valor: number = this.parcForm.get("valor").value;   
-   let juros: number = this.parcForm.get("juros").value;
-   let descontos: number = this.parcForm.get("descontos").value;
+   let valor = this.parcForm.get("valor").value;   
+   let juros = this.parcForm.get("juros").value;
+   let descontos = this.parcForm.get("descontos").value;
 
-   let valorTotal = valor+juros-descontos;
+   let valorTotal: number = valor+juros-descontos;
   
     this.parcForm.get("valor_total").setValue(valorTotal);
   }
@@ -117,5 +122,16 @@ export class MensalidadeFormComponent implements OnInit {
     this.mensForm.reset();
     this.mensForm.get("matricula").enable();
     this.mensForm.get("login").enable();
+  }
+
+  onSubmitParc(){
+    this.parcForm.get("valor_total").disable();
+    console.log(this.parcForm.value);
+    if(this.parcForm.valid){
+        this.mensalidadeService.saveParc(this.parcForm.value).subscribe(
+          succes=>{console.log("Ficha financeira incluida com sucessso")}
+        );
+    }
+   // this.parcForm.reset();
   }
 }

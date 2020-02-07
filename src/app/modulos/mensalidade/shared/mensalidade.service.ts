@@ -45,6 +45,26 @@ export class MensalidadeService {
       return this.create(mensalidade)
     }
   }
+
+  private updateParc(parcela){
+    return this.http.put(`${this.api}parc_ed.php?id=${parcela.id}`, JSON.stringify(parcela)).pipe(
+      tap(console.log),
+      take(1));
+  }
+
+  private createParc(parcela){
+    return this.http.post(`${this.api}parc_grav.php`, JSON.stringify(parcela)).pipe(
+        tap(console.log),
+        take(1));
+  }
+
+  saveParc(parcela){
+    if(parcela.id){
+      return this.updateParc(parcela)
+    }else{
+      return this.createParc(parcela)
+    }
+  }
 }
 
 
