@@ -145,7 +145,8 @@
                 <button
                   class="btn btn-info "
                   data-toggle="modal"
-                  data-target="#ExemploModalCentralizado"
+                  data-target="#ModalParcela"
+                  (click)="addParcela()"
                 >
                   <i class="fas fa-plus"></i>&nbsp; Parcelas &nbsp;<i
                     class="fas fa-money-check-alt"
@@ -157,7 +158,7 @@
             <!-- Modal -->
             <div
               class="modal fade"
-              id="ExemploModalCentralizado"
+              id="ModalParcela"
               tabindex="-1"
               role="dialog"
               aria-labelledby="TituloModalCentralizado"
@@ -169,14 +170,14 @@
                     <h5 class="modal-title" id="TituloModalCentralizado">
                       Dados da parcela.
                     </h5>
-                    <button
+                    <!--button
                       type="button"
                       class="close"
                       data-dismiss="modal"
                       aria-label="Fechar"
                     >
                       <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button-->
                   </div>
                   <div class="modal-body" style="font-weight: bold;">
                     <form [formGroup]="parcForm">
@@ -283,13 +284,20 @@
                           />
                         </div>
                         <div class="form-row col-md-12">
-                          <div class="form-group col-md-12">
+                          <div class="form-group col-md-6">
                             <button
-                           
-                              class="btn btn-danger col-md-12"
+                              class="btn btn-warning col-md-12"
                               (click)="mudaStatuaPag()"
                           >
-                           {{statusPag}}
+                           <span style="font-weight: bold;">{{statusPag}}</span>
+                          </button>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <button
+                              class="btn btn-info col-md-12"
+                              (click)="estornarPag()"
+                          >
+                           <span style="font-weight: bold;">Estornar</span>
                           </button>
                           </div>
                         </div>
@@ -332,7 +340,6 @@
             <table class="table table-hover" >
               <thead>
                 <tr class="bg-primary text-light">
-                  <th>#</th>
                   <th>Data do pagamento</th>
                   <th>Valor</th>
                   <th>Juros</th>
@@ -343,29 +350,30 @@
               </thead>
               <tbody>
                 <tr *ngFor="let parcela of parcelas">
-                  <td>
-                    <strong>{{mensalidade.id}}</strong>
-                  </td>
-                  <td>
-                    <strong>{{mensalidade.nome}}</strong><br>
-                    <small>{{mensalidade.login}}</small>
-                  </td>
-                  <td>
-                      {{this.formatarCpf(mensalidade.cpf)}}
+                  <td style="text-align: center;">
+                      {{parcela.data_pagamento | date: 'dd/MM/yyyy'}}
                   </td>
                   <td style="text-align: center;">
-                      {{mensalidade.data_geracao | date: 'dd/MM/yyyy'}}
+                      {{parcela.valor.replace(".", ",") }}
                   </td>
                   <td style="text-align: center;">
-                      {{mensalidade.dia_vencimento | number }}
-                 </td>
-                 <td style="text-align: right;">
-                 R$ {{mensalidade.valor_mensal.replace(".", ",") }}
-                </td>
+                      {{parcela.juros.replace(".", ",") }}
+                  </td>
+                  <td style="text-align: center;">
+                    {{parcela.descontos.replace(".", ",") }}
+                  </td>
+                  <td style="text-align: center;">
+                    {{parcela.status_parc}}
+                  </td>
                   <td>
-                    <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
-                    <button (click)="onEdit(mensalidade.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
-                    <button (click)="onDelete(mensalidade.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+                    <button (click)="onEdit(parcela)"  
+                            data-toggle="modal" 
+                            data-target="#ModalParcela" 
+                            class="btn btn-outline-info btn-sm">
+                            <i class="far fa-edit"></i>
+                    </button>
+
+                    <button (click)="onDelete(parcela.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
                   </td>
                 </tr>
               </tbody>

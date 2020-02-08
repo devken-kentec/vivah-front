@@ -3,11 +3,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { SelectsService } from '../../selects/selects.service';
 import { ActivatedRoute } from '@angular/router';
+import { Parcela } from '../shared/parcela';
 
 @Component({
   selector: 'app-mensalidade-form',
   templateUrl: './mensalidade-form.component.html',
-  styleUrls: ['./mensalidade-form.component.css']
+  styleUrls: ['./mensalidade-form.component.css'],
+  preserveWhitespaces: true
 })
 export class MensalidadeFormComponent implements OnInit {
 
@@ -16,7 +18,10 @@ export class MensalidadeFormComponent implements OnInit {
   mostrar: boolean = false;
   mostrarMens: boolean = false;
   mostBtnParc: boolean = false;
-  statusPag: string = "A receber";
+  statusPag: string;
+  parcelas: Parcela[];
+  valorFloat: number;
+  pagarIdFf: string;
  
   
   constructor(private fb: FormBuilder,
@@ -62,26 +67,35 @@ export class MensalidadeFormComponent implements OnInit {
       this.updateFicFinForm(mensalidade),
       this.mostBtnParc = true,
       this.mensForm.get("id_aluno").setValue(mensalidade.matricula),
-      this.parcForm.get("id_ficha_financeira").setValue(mensalidade.id)
-      //this.parcForm.get("valor").setValue(mensalidade.valor_mensal)
-
+      this.pagarIdFf = mensalidade.id,
+      this.listParc(mensalidade.id),
+      this.valorFloat = parseFloat(mensalidade.valor_mensal)
+    
     }
     );
-    
-    this.parcForm.get("status_parc").setValue(this.statusPag);
   }
 
-  
+  addParcela(){
+    this.parcForm.get("valor").setValue(this.valorFloat);
+    this.parcForm.get("id_ficha_financeira").setValue(this.pagarIdFf);
+    this.statusPag ="A receber";
+    this.parcForm.get("status_parc").setValue(this.statusPag);
+  }
 
   mudaStatuaPag(){
     this.statusPag ="Pago";
     this.parcForm.get("status_parc").setValue(this.statusPag);
   }
 
+  estornarPag(){
+    this.statusPag ="A receber";
+    this.parcForm.get("status_parc").setValue(this.statusPag);
+  }
+
   valorTotal(){
-   let valor = this.parcForm.get("valor").value;   
-   let juros = this.parcForm.get("juros").value;
-   let descontos = this.parcForm.get("descontos").value;
+   let valor: number = this.parcForm.get("valor").value;   
+   let juros: number = this.parcForm.get("juros").value;
+   let descontos:number = this.parcForm.get("descontos").value;
 
    let valorTotal: number = valor+juros-descontos;
   
@@ -126,12 +140,42 @@ export class MensalidadeFormComponent implements OnInit {
 
   onSubmitParc(){
     this.parcForm.get("valor_total").disable();
-    console.log(this.parcForm.value);
+    
     if(this.parcForm.valid){
         this.mensalidadeService.saveParc(this.parcForm.value).subscribe(
           succes=>{console.log("Ficha financeira incluida com sucessso")}
         );
-    }
-   // this.parcForm.reset();
+    } 
+    this.parcForm.reset();
+    this.parcForm.get("id_ficha_financeira").setValue(this.pagarIdFf);
   }
+
+  close(){
+   
+    let id = this.parcForm.get("id_ficha_financeira").value;
+    this.listParc(id);
+    this.parcForm.reset();
+ }
+
+  listParc(id){
+     this.mensalidadeService.loadByParcId(id).subscribe(
+       dados=> this.parcelas = dados
+     ); 
+  }
+
+  onEdit(parcela: any){
+    this.parcForm.get("id").setValue(parcela.id);
+    this.parcForm.get("data_pagamento").setValue(parcela.data_pagamento);
+    this.parcForm.get("valor").setValue(parseFloat(parcela.valor));
+    this.parcForm.get("juros").setValue(parseFloat(parcela.juros));
+    this.parcForm.get("descontos").setValue(parseFloat(parcela.descontos));
+    this.parcForm.get("tipo_pagamento").setValue(parcela.tipo_pagamento);
+    this.parcForm.get("obs").setValue(parcela.obs);
+    this.parcForm.get("status_parc").setValue(parcela.status_parc);
+    this.statusPag = this.parcForm.get("status_parc").value;
+    this.parcForm.get("id_ficha_financeira").setValue(this.pagarIdFf)
+    this.valorTotal();
+  }
+
+ 
 }

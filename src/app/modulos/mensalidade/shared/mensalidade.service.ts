@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { tap, take, delay } from 'rxjs/operators';
+import { Parcela } from './parcela';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +47,7 @@ export class MensalidadeService {
     }
   }
 
+ // Modulos das parcelas da ficha financeira
   private updateParc(parcela){
     return this.http.put(`${this.api}parc_ed.php?id=${parcela.id}`, JSON.stringify(parcela)).pipe(
       tap(console.log),
@@ -64,6 +66,12 @@ export class MensalidadeService {
     }else{
       return this.createParc(parcela)
     }
+  }
+
+  loadByParcId(id: number){
+    return this.http.get<Parcela[]>(`${this.api}parc_list.php?id=${id}`).pipe(
+      tap(console.log),
+      take(1));
   }
 }
 
