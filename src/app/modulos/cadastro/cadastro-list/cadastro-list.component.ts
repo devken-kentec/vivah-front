@@ -14,6 +14,8 @@ export class CadastroListComponent implements OnInit {
 
   cadastros: Cadastro[];
   mostrarMens: boolean = false;
+  _nome: string = "";
+  _id: string = "";
   
 
   constructor(private _cadastroService: CadastroService,
@@ -22,6 +24,10 @@ export class CadastroListComponent implements OnInit {
 
 
   ngOnInit() {
+   this.list();
+  }
+
+  list(){
     this._cadastroService.list().subscribe(
       dados => this.cadastros = dados
     );
@@ -31,17 +37,23 @@ export class CadastroListComponent implements OnInit {
     this.router.navigate(['editar', id], {relativeTo: this.route});
   }
 
-  onDelete(id){
-    const confirma = confirm("Deseja excluir o registro de " + id + " ?");
+  pegaDados(id, nome){  
+     this._nome = nome;
+     this._id = id;
+  }
 
-    if(confirma){
-     // window.location.reload();
-      this._cadastroService.remove(id).subscribe(
-        success=>{console.log("Item excluido!"), this.mostrarMens = true},
-        error=>{console.log("Erro ao excluir!!")},
-        ()=>console.log("Completo")
-      );
-    }
+  onDelete(){
+
+    this._cadastroService.remove(this._id).subscribe(
+      success=>{console.log("Item excluido!"), this.mostrarMens = true},
+      error=>{console.log("Erro ao excluir!!")},
+      ()=>console.log("Completo")
+    );
+
+  }
+
+  close(){
+    this.list();
   }
 
 }

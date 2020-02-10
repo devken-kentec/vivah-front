@@ -143,7 +143,8 @@ export class MensalidadeFormComponent implements OnInit {
     
     if(this.parcForm.valid){
         this.mensalidadeService.saveParc(this.parcForm.value).subscribe(
-          succes=>{console.log("Ficha financeira incluida com sucessso")}
+          succes=>{console.log("Ficha financeira incluida com sucessso"),
+          this.mostrarMens=true }
         );
     } 
     this.parcForm.reset();
