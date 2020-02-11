@@ -16,6 +16,8 @@ export class FichaTecnicaListComponent implements OnInit {
   mostrarMens: boolean = false;
   ficTecListForm: FormGroup;
   nome: string = "";
+  _nome: string = "";
+  _id: string = "";
 
   constructor(private _fichaTecnicaService: FichaTecnicaService,
               private fb: FormBuilder,
@@ -24,13 +26,17 @@ export class FichaTecnicaListComponent implements OnInit {
 
   ngOnInit() {
 
-    this._fichaTecnicaService.list().subscribe(
-      dados => this.fichasTecnica = dados
-    );
+    this.list();
 
     this.ficTecListForm = this.fb.group({
       login: ['',[]]
     });
+  }
+
+  list(){
+    this._fichaTecnicaService.list().subscribe(
+      dados => this.fichasTecnica = dados
+    );
   }
 
   buscaAluno(){
@@ -46,15 +52,20 @@ export class FichaTecnicaListComponent implements OnInit {
     this.router.navigate(['editar', id], {relativeTo: this.route});
   }
 
-  onDelete(id){
-    const confirma = confirm("Deseja excluir o registro de " + id + " ?");
+  pegaDados(id, nome){  
+    this._nome = nome;
+    this._id = id;
+ }
 
-    if(confirma){
-      this._fichaTecnicaService.remove(id).subscribe(
+  onDelete(){
+
+      this._fichaTecnicaService.remove(this._id).subscribe(
         success=>{console.log("Item excluido!"), this.mostrarMens = true},
         error=>{console.log("Erro ao excluir!!")},
-        ()=>console.log("Completo")
-      );
-    }
+        ()=>console.log("Completo"));
+  }
+
+  close(){
+    this.list();
   }
 }

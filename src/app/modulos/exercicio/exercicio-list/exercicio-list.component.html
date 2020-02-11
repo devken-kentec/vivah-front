@@ -18,12 +18,6 @@
       </a>
     </div>
   </div>
-  <div *ngIf ="mostrarMens" class="alert alert-danger" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <span> Registro excluido com sucesso! </span>
-   </div>
    <div class="col-12">
     <table class="table table-hover" *ngIf="exercicios else loading">
       <thead>
@@ -56,7 +50,7 @@
           <td>
             <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
             <button (click)="onEdit(exercicio.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
-            <button (click)="onDelete(exercicio.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
+            <button (click)="pegaDados(exercicio.id ,exercicio.nome)" data-toggle="modal" data-target="#ModalExclusao" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
           </td>
         </tr>
       </tbody>
@@ -69,4 +63,57 @@
       </div>
     </ng-template>
   </div>
+      <!-- Modal -->
+  <div
+  class="modal fade"
+  id="ModalExclusao"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="TituloModalCentralizado"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TituloModalCentralizado">
+          Vamos lá!
+        </h5>
+        <!--button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Fechar"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button-->
+      </div>
+      <div class="modal-body" style="font-weight: bold;">
+        Deseja excluir o registro de {{_nome}} ?
+      </div>
+      <div class="col-md-12">
+        <div *ngIf ="mostrarMens"  style="text-align: center;"  class="col-10 alert alert-danger" role="alert">
+          <span> Registro excluido com sucesso! </span>
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="close()"
+          data-dismiss="modal"
+        >
+          <i class="fas fa-window-close"></i>&nbsp;Fechar
+        </button>
+        <button
+          
+          class="btn btn-success"
+          (click)="onDelete()"
+        >
+          <i class="fas fa-save"></i> &nbsp;Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Fim da modal-->
 </div>

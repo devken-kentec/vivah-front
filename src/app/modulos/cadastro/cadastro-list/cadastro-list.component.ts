@@ -47,9 +47,7 @@ export class CadastroListComponent implements OnInit {
     this._cadastroService.remove(this._id).subscribe(
       success=>{console.log("Item excluido!"), this.mostrarMens = true},
       error=>{console.log("Erro ao excluir!!")},
-      ()=>console.log("Completo")
-    );
-
+      ()=>console.log("Completo"));
   }
 
   close(){

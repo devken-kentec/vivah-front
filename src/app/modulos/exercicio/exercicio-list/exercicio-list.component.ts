@@ -13,6 +13,8 @@ export class ExercicioListComponent implements OnInit {
 
   exercicios: Exercicio[];
   mostrarMens: boolean = false;
+  _nome: string = "";
+  _id: string = "";
 
 
   constructor(private _exercicioService: ExercicioService,
@@ -20,6 +22,10 @@ export class ExercicioListComponent implements OnInit {
             private route: ActivatedRoute) { }
 
   ngOnInit() {
+   this.list();
+  }
+
+  list(){
     this._exercicioService.list().subscribe(
       dados => this.exercicios = dados
     );
@@ -27,19 +33,23 @@ export class ExercicioListComponent implements OnInit {
 
   onEdit(id){
     this.router.navigate(['editar', id], {relativeTo: this.route});
-   
   }
 
-  onDelete(id){
-    const confirma = confirm("Deseja excluir o registro de " + id + " ?");
+  pegaDados(id, nome){  
+    this._nome = nome;
+    this._id = id;
+ }
 
-    if(confirma){
-      this._exercicioService.remove(id).subscribe(
+  onDelete(){
+
+      this._exercicioService.remove(this._id).subscribe(
         success=>{console.log("Item excluido!"), this.mostrarMens = true},
         error=>{console.log("Erro ao excluir!!")},
-        ()=>console.log("Completo")
-      );
-    }
+        ()=>console.log("Completo"));
   }
+
+  close(){
+    this.list();
+  }  
   
 }
