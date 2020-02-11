@@ -66,4 +66,8 @@ export class AppComponent {
      this.router.navigate(['/login']); 
   }
 
+  exit(){
+    document.location.reload(true);
+  }
+
 }

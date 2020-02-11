@@ -18,7 +18,7 @@
           <a *ngIf="visiMens" class="dropdown-item" routerLink="/mensalidade" id="mens"><i class="fas fa-hand-holding-usd"></i>&nbsp;Mensalidade</a>
           <div class="dropdown-divider"></div>
           <div class="col-12 d-flex justify-content-center">
-              <button type="submit" class="btn btn-danger col-md-10" data-toggle="modal" name="sair">Sair&nbsp;<i class="fas fa-sign-out-alt"></i></button>
+              <button type="submit" (click)="exit()" class="btn btn-danger col-md-10"  name="sair">Sair&nbsp;<i class="fas fa-sign-out-alt"></i></button>
           </div>
       </div>
   </div>
