@@ -1,0 +1,181 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Listagem</li>
+    </ol>
+  </nav>
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Listagem da Pagamentos.
+      </h1>
+    </div>
+  </div>
+    <form [formGroup]="relFinanFormList">
+      <p>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseData" aria-expanded="false" aria-controls="collapseExample">
+          Pesquisa por período
+        </button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseAluno" aria-expanded="false" aria-controls="collapseExample">
+          Pesquisa por aluno
+        </button>
+        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseStatusPag" aria-expanded="false" aria-controls="collapseExample">
+          Pesquisa por Status do Pagamento
+        </button>
+      </p>
+      <div class="collapse" id="collapseData">
+        <div class="card card-body">
+          <span>Por período:</span>
+          <div class="form-row col-md-12  d-flex justify-content-center d-flex align-items-center">
+            <div class="form-group col-md-3">
+              <label for="di">Data Inicial:</label>
+              <input
+                type="date"
+                class="form-control"
+                id="di"
+                formControlName="dataInicial"
+                placeholder="Data Inicial"
+                />
+            </div> 
+            <div class="form-group col-md-3 ">
+              <label for="df">Data Final:</label>
+              <input
+                type="date"
+                class="form-control"
+                id="df"
+                formControlName="dataFinal"
+                placeholder="Data Final"
+                />
+            </div>
+            <div class="form-group col-md-3 mt-4">
+            <button (click)="buscarData()" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i> Buscar</button>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="collapse" id="collapseAluno">
+        <div class="card card-body">
+          <span>Por Aluno:</span>
+          <div class="form-row col-md-12  d-flex justify-content-center d-flex align-items-center">
+
+            <div class="form-group col-md-3">
+              <label for="mat">Matrícula:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="mat"
+                formControlName="matricula"
+                placeholder="Matrícula"
+                />
+            </div> 
+            <div class="form-group col-md-3 ">
+              <label for="log">Login:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="log"
+                formControlName="login"
+                placeholder="Login"
+                />
+            </div>
+            <div class="form-group col-md-3 mt-4">
+            <button (click)="buscarAluno()" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i> Buscar</button>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="collapse" id="collapseStatusPag">
+        <div class="card card-body">
+          <span>Por status de pagamento:</span>
+          <div class="form-row col-md-12  d-flex justify-content-center d-flex align-items-center">
+            <div class="form-group col-md-3">
+              <label for="di">Data Inicial:</label>
+              <input
+                type="date"
+                class="form-control"
+                id="di"
+                formControlName="dataInicial"
+                placeholder="Data Inicial"
+                />
+            </div> 
+            <div class="form-group col-md-3 ">
+              <label for="df">Data Final:</label>
+              <input
+                type="date"
+                class="form-control"
+                id="df"
+                formControlName="dataFinal"
+                placeholder="Data Final"
+                />
+            </div>
+            <div class="form-group col-md-3 ">
+              <label for="situacao">Status do Pagamento:</label>
+              <select
+                id="situacao"
+                class="form-control"
+                formControlName="statusPag"
+              >
+                <option>Pago</option>
+                <option>A receber</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3 mt-4">
+            <button (click)="buscarStatusPag()" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i> Buscar</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <br/>
+   <div class="col-12">
+    <table class="table table-hover" style="box-shadow: 5px 5px 10px #000;">
+      <thead>
+        <tr class="bg-secondary text-light">
+          <th>Cód</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Total pago</th>
+          <th>Data do pagamento</th>
+          <th>Situação</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rf of relatoriosFinanceiro">
+          <td>
+            <strong>{{rf.id}}</strong><br>
+            <small>Vencimento: dia {{rf.dia_vencimento}}</small><br>
+            <small>Valor mensal: {{rf.valor_mensal.replace('.', ',')}}</small> 
+          </td>
+          <td>
+            <strong>{{rf.nome}}</strong><br>
+            <small>Ficha financeira: {{rf.id_ficha_financeira}} &nbsp;</small><br>
+            <small>Status: {{rf.status_ff}}</small>&nbsp;<small>login: {{rf.login}}</small>
+          </td>
+          <td>
+              {{formatarCpf(rf.cpf)}}<br/>
+              <small>Cód. da Parcela: {{rf.id_parcela}} &nbsp;</small><br>
+              <small>Valor: {{rf.valor}}</small>
+          </td>
+          <td>
+            {{rf.total.replace('.', ',')}}<br/>
+            <small>Juros: {{rf.juros.replace('.', ',')}} </small><br/>
+            <small>Descontos: {{rf.descontos.replace('.', ',')}} </small>
+          </td>
+          <td>
+              {{rf.data_pagamento | date: 'dd/MM/yyyy'}}<br/>
+              <small>Obs.: {{rf.obs}} </small>
+         </td>
+         <td>
+              <span [style.color]="mudarCor(rf.status_parc)"> {{ rf.status_parc }}</span><br>
+              <small>Tipo do pag.: {{rf.tipo_pagamento}}</small>
+         </td>
+
+        </tr>
+      </tbody>
+    </table>  
+   </div>
+    <div class="card-body">
+  </div>
+</div>

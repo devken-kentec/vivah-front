@@ -6,5 +6,5 @@ export interface Mensalidade {
     cpf: string,
     data_geracao: string,
     dia_vencimento: number,
-    valor_mensal: number
+    valor_mensal: string
 }

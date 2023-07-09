@@ -1,0 +1,77 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Consulta Treino</li>
+    </ol>
+  </nav>
+
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Treino do dia
+      </h1>
+    </div>
+    <div class="col-md">
+      <a routerLink="/" class="btn btn-warning float-right">
+        <i class="fas fa-backward"></i>&nbsp;Voltar
+      </a>
+  </div>
+  </div>
+  <form [formGroup]="listaExerForm">
+    <div class="card" style="box-shadow: 5px 5px 10px #000;">
+      <div class="card-header">
+        Consulta Rápida da Lista de Exercícios para Treino
+      </div>
+      <div class="card-body">
+        <div class="form-row col-md-12">
+          <div class="form-group col-md-2">
+            <label for="id">Ficha Técnica:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="id"
+              formControlName="fichaTecnica"
+            />
+          </div>
+          <div class="form-group col-md-5">
+            <label for="diaTreino">Dia de treino:</label>
+            <select class="form-control" id="diaTreino" formControlName="diaSemana">
+              <option selected>Nenhum</option>
+              <option>Segunda</option>
+              <option>Terça</option>
+              <option>Quarta</option>
+              <option>Quinta</option>
+              <option>Sexta</option>
+              <option>Sábado</option>
+            </select>
+          </div>
+          <div class="form-group col-md-5" style="margin-top: 36px">
+            <div><button  (click)="buscarExercicios()" class="btn btn-outline-info btn-sm"><i class="fas fa-search"></i>&nbsp;Buscar</button></div>
+          </div>
+        </div>
+
+       <div class="container mt-2">
+        <table class="table table-hover" >
+          <thead>
+            <tr class="bg-primary text-light">
+              <th>Nome</th>
+              <th>Nivel</th>
+              <th>Tipo</th>
+              <th>Modalidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let exer of exers">
+              <td>{{exer.nome}}</td>
+              <td>{{exer.nivel}}</td>
+              <td>{{exer.tipo}}</td>
+              <td>{{exer.modalidade}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -6,11 +6,10 @@
       <li class="breadcrumb-item active">Ficha Financeira</li>
     </ol>
   </nav>
-
   <div class="row mb-4">
     <div class="col-md">
       <h1 class="h2 border-left pl-2">
-        Ficha financeira dos alunos
+        Ficha Financeira dos Alunos
       </h1>
     </div>
     <div class="col-md">
@@ -23,7 +22,7 @@
     Operação realizada com sucesso!!!
   </div>
   <form [formGroup]="mensForm">
-    <div class="card">
+    <div class="card" style="box-shadow: 5px 5px 10px #000;">
       <div class="card-header">
         Ficha para Informações financeiras dos alunos!
       </div>
@@ -154,7 +153,6 @@
                 </button>
               </div>
             </div>
-
             <!-- Modal -->
             <div
               class="modal fade"
@@ -170,14 +168,6 @@
                     <h5 class="modal-title" id="TituloModalCentralizado">
                       Dados da parcela.
                     </h5>
-                    <!--button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      aria-label="Fechar"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button-->
                   </div>
                   <div class="modal-body" style="font-weight: bold;">
                     <form [formGroup]="parcForm">
@@ -325,7 +315,7 @@
                       <i class="fas fa-window-close"></i>&nbsp;Fechar
                     </button>
                     <button
-                      
+
                       class="btn btn-success"
                       (click)="onSubmitParc()"
                     >
@@ -338,13 +328,14 @@
             <!--Fim da modal-->
           </div>
           <div class="col-12">
-            <table class="table table-hover" >
+            <table class="table table-hover" style="box-shadow: 5px 5px 10px #000;">
               <thead>
                 <tr class="bg-primary text-light">
                   <th>Data do pagamento</th>
                   <th>Valor</th>
                   <th>Juros</th>
                   <th>Descontos</th>
+                  <th>Total</th>
                   <th>Status</th>
                   <th>Ações</th>
                 </tr>
@@ -355,32 +346,33 @@
                       {{parcela.data_pagamento | date: 'dd/MM/yyyy'}}
                   </td>
                   <td style="text-align: center;">
-                      {{parcela.valor.replace(".", ",") }}
+                      {{parcela.valor.replace(".", ",")}}
                   </td>
                   <td style="text-align: center;">
-                      {{parcela.juros.replace(".", ",") }}
+                      {{parcela.juros.replace(".", ",")}}
                   </td>
                   <td style="text-align: center;">
-                    {{parcela.descontos.replace(".", ",") }}
+                    {{parcela.descontos.replace(".", ",")}}
+                  </td>
+                  <td style="text-align: center;">
+                    {{parcela.total.replace(".", ",")}}
                   </td>
                   <td style="text-align: center;">
                     {{parcela.status_parc}}
                   </td>
                   <td>
-                    <button (click)="onEdit(parcela)"  
-                            data-toggle="modal" 
-                            data-target="#ModalParcela" 
+                    <button (click)="onEdit(parcela)"
+                            data-toggle="modal"
+                            data-target="#ModalParcela"
                             class="btn btn-outline-info btn-sm">
                             <i class="far fa-edit"></i>
                     </button>
-
                     <button (click)="onDelete(parcela.id)" class="btn btn-outline-danger btn-sm"><i class="far fa-trash-alt"></i></button>
                   </td>
                 </tr>
               </tbody>
             </table>
            </div>
-
         </div>
       </div>
     </div>
@@ -391,18 +383,5 @@
         <i class="fas fa-save"></i> &nbsp; Salvar
       </button>
     </div>
-    <div class="col-12">
-      <div class="col-6">
-        <pre>
-          {{ mensForm.value | json }}  
-        </pre>
-      </div>
-      <div class="col-6">
-        <pre>
-          {{ parcForm.value | json }}  
-        </pre>
-      </div>
-    </div>
-    
   </div>
 </div>

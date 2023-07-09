@@ -1,12 +1,20 @@
 <div class="d-flex justify-content-center col-12" style="margin-top: 10%;">
 <form  [formGroup]="loginForm">
-  <div class="card">
+  <div class="form-group col-md-12">                         
+    <div *ngIf ="msgError"  class="alert alert-danger" role="alert">
+            Usuário ou senha não encontrado!
+        <a type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+        </a>
+    </div>
+  </div>
+  <div class="card" style="box-shadow: 5px 5px 10px #000;">
     <div class="card-header text-center">
     <b>Entre com o seu login e senha.</b> 
     </div>
     <div class="card-body">
       <div class="text-center">
-        <img src="/assets/vivah.jpg" >
+        <img src="/assets/vivah.jpg">
       </div>
       <div class="form-row col-md-12">
         <div class="form-group col-md-12">
@@ -15,7 +23,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text"> <i class="fas fa-user"></i></span>
             </div>
-             <input formControlName="login" type="text" class="form-control" id="login" style="text-align: center;" placeholder="LOGIN"/>
+             <input formControlName="login" type="text" class="form-control" id="login" (blur)="fechar()" style="text-align: center;" placeholder="LOGIN"/>
           </div>
         </div>
       </div>
@@ -26,7 +34,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-key"></i></span>
           </div>
-            <input  formControlName="senha" type="password" class="form-control" id="senha" style="text-align: center;" placeholder="SENHA"/>
+            <input  formControlName="senha" type="password" class="form-control" id="senha" (focus)="fechar()" style="text-align: center;" placeholder="SENHA"/>
         </div>
         </div>
       </div>

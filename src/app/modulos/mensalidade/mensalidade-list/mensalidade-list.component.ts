@@ -38,4 +38,8 @@ export class MensalidadeListComponent implements OnInit {
    return cpf
   }
 
+  onDelete(id){
+
+  }
+
 }

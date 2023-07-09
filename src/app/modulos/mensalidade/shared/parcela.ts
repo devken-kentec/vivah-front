@@ -2,10 +2,11 @@ export interface Parcela {
 
     id: number,
     data_pagamento: string,
-    valor: number,
-    juros: number,
-    descontos: number,
+    valor: string,
+    juros: string,
+    descontos: string,
     tipo_pagamento: string,
+    total: string,
     status_parc: string,
     obs: string
 }

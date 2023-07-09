@@ -10,7 +10,7 @@
   <div class="row mb-4">
     <div class="col-md">
       <h1 class="h2 border-left pl-2">
-        Cadastro de exercícios
+        Cadastro de Exercícios
       </h1>
     </div>
     <div class="col-md">
@@ -23,7 +23,7 @@
     Operação realizada com sucesso!!!
   </div>
   <form class="needs-validation" novalidate [formGroup]="exerForm">
-    <div class="card">
+    <div class="card" style="box-shadow: 5px 5px 10px #000;">
       <div class="card-header">
         Formulário para cadastro de exercícios
       </div>
@@ -140,8 +140,5 @@
     >
     <i class="fas fa-save"></i> &nbsp;Salvar
     </button>
-  </div>
-  <pre>
-    {{ exerForm.value | json }}  
-    </pre>  
+  </div> 
 </div>

@@ -12,11 +12,9 @@ import { AuthService } from '../shared/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  private usuario: Usuario = new Usuario();
-
   loginForm: FormGroup;
   usuarios: Usuario[];
- 
+  msgError: boolean = false;
 
   constructor(private _authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
@@ -30,21 +28,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  fechar(){
+    this.msgError = false;
+  }
+
   fazerLogin(){
 
       let loginTela = this.loginForm.get('login').value;
       let senhaTela = this.loginForm.get('senha').value;
 
-    this._authService.buscaUsuario(this.loginForm.value).subscribe(data =>{
+    this._authService.buscaUsuario(this.loginForm.value).subscribe((data: any) =>{
         if(data.login === loginTela && data.senha === senhaTela){
             this._authService.setLoggedIn(true);
             this.router.navigate(['/']); 
             this._authService.pegarDados(data.login, data.tipo_user);
-            //alert('Usuario: ' + data.login + ' autenticado com sucesso!');
         } 
-        
-        
-    });
+    }, (error: any) => { this.msgError = true });
   }
 
   

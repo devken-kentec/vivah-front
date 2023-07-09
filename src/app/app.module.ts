@@ -9,9 +9,12 @@ import { AppComponent } from './app.component';
 import { AuthService } from './modulos/login/shared/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
+
 @NgModule({
   declarations: [
     AppComponent
+
   ],
   imports: [
     BrowserModule,

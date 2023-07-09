@@ -10,20 +10,19 @@ import { Exercicio } from './exercicio';
 })
 export class SelectsService {
 
-  private readonly api = `${environment.api}/selects/`;
+  private readonly api = `${environment.api}`;
 
   constructor(private http: HttpClient) { }
 
   buscaUsuario(usuario){
-    return this.http.get<Usuario[]>(`${this.api}select_cad_user.php?id="${usuario.matricula}"&login="${usuario.login}"`).pipe(
-      tap(console.log),
+    return this.http.get<Usuario[]>(`${this.api}/select_cad_user.php?id="${usuario.matricula}"&login="${usuario.login}"`).pipe(
       take(1)
       );
   }
 
   buscaExercicios(){
-    return this.http.get<Exercicio[]>(`${this.api}select_exer.php`).pipe(
-      tap(console.log)
+    return this.http.get<Exercicio[]>(`${this.api}/select_exer.php`).pipe(
+      take(1)
     );
   }
 }

@@ -13,19 +13,19 @@ export class ExercicioFormComponent implements OnInit {
   exerForm: FormGroup;
   mostrarMens: boolean = false;
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
               private _exercicioService: ExercicioService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
 
     const routeParams = this.route.snapshot.params;
-    console.log(routeParams.id)
 
-    this._exercicioService.loadById(routeParams.id).subscribe((exercicio: any)=> {
-      console.log(exercicio),
-      this.updateExerForm(exercicio)
-    });
+    if(routeParams.id != null){
+      this._exercicioService.loadById(routeParams.id).subscribe((exercicio: any)=> {
+        this.updateExerForm(exercicio)
+      });
+    }
 
     this.exerForm = this.fb.group({
         id: ['',[]],

@@ -10,32 +10,34 @@ import { Parcela } from './parcela';
 })
 export class MensalidadeService {
 
-  private readonly api = `${environment.api}/ficha_financeira/`;
+  private readonly api = `${environment.api}`;
 
   constructor(private http: HttpClient) { }
 
   list(){
-    return this.http.get<Mensalidade[]>(`${this.api}fic_fin_list.php`).pipe(
-        delay(1000),
-        tap(console.log)
+    return this.http.get<Mensalidade[]>(`${this.api}/fic_fin_list.php`).pipe(
+        take(1)
+    );
+  }
+
+  loadByIdAluno(id: number){
+    return this.http.get(`${this.api}/fic_fin_id.php?id=${id}`).pipe(
+      take(1)
     );
   }
 
   loadById(id: number){
-    return this.http.get(`${this.api}fic_fin_sel.php?id=${id}`).pipe(
-      tap(console.log),
+    return this.http.get(`${this.api}/fic_fin_sel.php?id=${id}`).pipe(
       take(1));
   }
 
   private update(mensalidade){
-    return this.http.put(`${this.api}fic_fin_ed.php?id=${mensalidade.id}`, JSON.stringify(mensalidade)).pipe(
-      tap(console.log),
+    return this.http.put(`${this.api}/fic_fin_ed.php?id=${mensalidade.id}`, JSON.stringify(mensalidade)).pipe(
       take(1));
   }
 
   private create(mensalidade){
-    return this.http.post(`${this.api}fic_fin_grav.php`, JSON.stringify(mensalidade)).pipe(
-        tap(console.log),
+    return this.http.post(`${this.api}/fic_fin_grav.php`, JSON.stringify(mensalidade)).pipe(
         take(1));
   }
 
@@ -49,14 +51,12 @@ export class MensalidadeService {
 
  // Modulos das parcelas da ficha financeira
   private updateParc(parcela){
-    return this.http.put(`${this.api}parc_ed.php?id=${parcela.id}`, JSON.stringify(parcela)).pipe(
-      tap(console.log),
+    return this.http.put(`${this.api}/parc_ed.php?id=${parcela.id}`, JSON.stringify(parcela)).pipe(
       take(1));
   }
 
   private createParc(parcela){
-    return this.http.post(`${this.api}parc_grav.php`, JSON.stringify(parcela)).pipe(
-        tap(console.log),
+    return this.http.post(`${this.api}/parc_grav.php`, JSON.stringify(parcela)).pipe(
         take(1));
   }
 
@@ -69,8 +69,7 @@ export class MensalidadeService {
   }
 
   loadByParcId(id: number){
-    return this.http.get<Parcela[]>(`${this.api}parc_list.php?id=${id}`).pipe(
-      tap(console.log),
+    return this.http.get<Parcela[]>(`${this.api}/parc_list.php?id=${id}`).pipe(
       take(1));
   }
 }

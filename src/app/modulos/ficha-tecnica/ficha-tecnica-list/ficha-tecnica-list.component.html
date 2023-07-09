@@ -8,16 +8,15 @@
   <div class="row mb-4">
     <div class="col-md">
       <h1 class="h2 border-left pl-2">
-        Lista de fichas técnicas
+        Lista de Fichas Técnicas
       </h1>
     </div>
     <div class="col-md">
       <a routerLink="new" class="btn btn-success float-right">
-        <i class="fas fa-user-plus"></i> Cadastrar Ficha Técnica 
+        <i class="fas fa-user-plus"></i> Cadastrar Ficha Técnica
       </a>
     </div>
   </div>
-  
     <form [formGroup]="ficTecListForm">
       <div class="form-row col-md-12  d-flex justify-content-end d-flex align-items-center ">
         <div class="form-group col-md-3 ">
@@ -28,18 +27,17 @@
             id="login"
             formControlName="login"
             placeholder="Pesquisar"
-            (input)="buscaAluno()"
+            (input)="buscarAluno()"
             />
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
           </div>
         </div>
-        
       </div>
     </form>
    <div class="col-12">
-    <table class="table table-hover" *ngIf="fichasTecnica else loading">
+    <table class="table table-hover" *ngIf="fichasTecnica else loading" style="box-shadow: 5px 5px 10px #000;">
       <thead>
         <tr class="bg-primary text-light">
           <th>#</th>
@@ -47,6 +45,7 @@
           <th>Data da Avaliação</th>
           <th>Entrada</th>
           <th>Saída</th>
+          <th>Situação</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -54,18 +53,18 @@
         <tr *ngFor="let fichaTecnica of fichasTecnica">
           <td>
             <strong>{{fichaTecnica.id}}</strong><br>
-            <small>Login-></small><br>
-            <small>Dias de treino-></small> 
+            <small>Login:</small><br>
+            <small>Dias de treino:</small>
           </td>
           <td>
             <strong>{{fichaTecnica.nome}}</strong><br>
             <small>{{fichaTecnica.login}}</small><br>
-            <small>Segunda: {{fichaTecnica.seg}}</small>
-            <small>Terça: {{fichaTecnica.ter}}</small>
-            <small>Quarta: {{fichaTecnica.qua}}</small>
-            <small>Quinta: {{fichaTecnica.qui}}</small>
-            <small>Sexta: {{fichaTecnica.sex}}</small>
-            <small>Sábado: {{fichaTecnica.sab}}</small>
+            <small>Seg.: {{fichaTecnica.seg}}</small>
+            <small>Ter.: {{fichaTecnica.ter}}</small>
+            <small>Qua.: {{fichaTecnica.qua}}</small>
+            <small>Qui.: {{fichaTecnica.qui}}</small>
+            <small>Sex.: {{fichaTecnica.sex}}</small>
+            <small>Sáb.: {{fichaTecnica.sab}}</small>
           </td>
           <td>
               {{fichaTecnica.data_avaliacao | date: 'dd/MM/yyyy'}}
@@ -76,6 +75,9 @@
           <td>
               {{fichaTecnica.hora_saida}}
          </td>
+         <td>
+           {{fichaTecnica.status_ft}}
+         </td>
           <td>
             <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
             <button (click)="onEdit(fichaTecnica.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
@@ -83,7 +85,7 @@
           </td>
         </tr>
       </tbody>
-    </table>  
+    </table>
    </div>
     <div class="card-body">
     <ng-template #loading>
@@ -107,14 +109,7 @@
         <h5 class="modal-title" id="TituloModalCentralizado">
           Vamos lá!
         </h5>
-        <!--button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Fechar"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button-->
+
       </div>
       <div class="modal-body" style="font-weight: bold;">
         Deseja excluir a ficha técnica nº {{_id}} de {{_nome}} ?
@@ -134,7 +129,7 @@
           <i class="fas fa-window-close"></i>&nbsp;Fechar
         </button>
         <button
-          
+
           class="btn btn-success"
           (click)="onDelete()"
         >

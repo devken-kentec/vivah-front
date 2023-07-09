@@ -8,23 +8,24 @@
   <div class="row mb-4">
     <div class="col-md">
       <h1 class="h2 border-left pl-2">
-        Listagem de alunos
+        Listagem de Pessoas
       </h1>
     </div>
     <div class="col-md">
       <a routerLink="new" class="btn btn-success float-right">
-        <i class="fas fa-user-plus"></i> Novo Aluno
+        <i class="fas fa-user-plus"></i> Nova Pessoa
       </a>
     </div>
   </div>
-  <div class="col-md-12">
-    <table class="table table-hover" *ngIf="cadastros else loading">
+  <div class="col-md-12" >
+    <table class="table table-hover" *ngIf="cadastros else loading" style="box-shadow: 5px 5px 10px #000;">
       <thead>
         <tr class="bg-primary text-light">
           <th>#</th>
           <th>Nome/Login</th>
           <th>Telefone</th>
           <th>Zap</th>
+          <th>Status</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -39,6 +40,7 @@
           </td>
           <td>{{cadastro.fone}}</td>
           <td>{{cadastro.fone_cel}}</td>
+          <td>{{cadastro.status_mat}}</td>
           <td>
             <!--a [routerLink]="[2, 'edit']" class="btn btn-outline-info btn-sm">Editar</a-->
             <button (click)="onEdit(cadastro.id)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
@@ -70,14 +72,6 @@
         <h5 class="modal-title" id="TituloModalCentralizado">
           Vamos lá!
         </h5>
-        <!--button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Fechar"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button-->
       </div>
       <div class="modal-body" style="font-weight: bold;">
         Deseja excluir o registro de {{_nome}} ?
@@ -97,7 +91,6 @@
           <i class="fas fa-window-close"></i>&nbsp;Fechar
         </button>
         <button
-          
           class="btn btn-success"
           (click)="onDelete()"
         >

@@ -1,0 +1,48 @@
+<div class="col-md-6" style="box-shadow: 5px 5px 10px #000;">
+  <br/>
+<h4 class="col-md-12" style="font-weight: bold; color: blue; margin-top: 15px;">
+    Energy for Espaço Vivah.
+</h4>
+<div class="col-12" style="font-weight: bold;">
+  Exercícios para {{hoje}}<span *ngIf="hoje != 'Sábado'"> - Feira</span>.
+</div>
+<div>
+  <div class="form-row col-md-12 mt-3" >
+      <span id="ft" style=" font-weight: bold; font-size:10pt;"> Ficha Técnica N.º: {{ fichaTec }}</span>
+  </div>
+  <div class="form-row col-md-12">
+    <span id="na" style="font-weight: bold; font-size: 10pt">Nome do aluno: {{ aluno }}</span>
+  </div>
+  <div class="form-row col-md-12">
+      <span id="da" style="font-weight: bold; font-size: 10pt">Data avaliação: {{ data_avaliacao | date: 'dd/MM/yyyy'}}</span>
+  </div>
+  <div class="form-row col-md-12">
+      <span id="da" style="font-weight: bold; font-size: 10pt">Status da ficha técnica: {{ statusAluno }}</span>
+  </div>
+  <br/>
+  <div class="form-row col-md-12">
+      <table class="table table-hover" style="box-shadow: 5px 5px 10px #000;">
+      <thead>
+        <tr class="bg-secondary text-light">
+          <th>Exercícios</th>
+          <th>Nível</th>
+          <th>Tipo</th>
+          <th>Modalidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exer of exers">
+          <td><small>{{exer.nome}}</small></td>
+          <td><small>{{exer.nivel}}</small></td>
+          <td><small>{{exer.tipo}}</small></td>
+          <td><small>{{exer.modalidade}}</small></td>
+        </tr>
+    </tbody>
+    </table>
+  </div>
+  <div class="form-row col-md-12">
+    <span id="da" style="color: red; font-weight: bold; font-size: 10pt">Sua mensalidade vence todo dia {{ vencimento }} de cada mês, não esqueça o pagamento!</span>
+  </div>
+</div>
+<br/>
+</div>

@@ -1,0 +1,74 @@
+<div class="col-12">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+      <li class="breadcrumb-item active">Lista de Frequência</li>
+    </ol>
+  </nav>
+
+  <div class="row mb-4">
+    <div class="col-md">
+      <h1 class="h2 border-left pl-2">
+        Lista de Frequência dos Alunos
+      </h1>
+    </div>
+    <div class="col-md">
+      <a routerLink="/" class="btn btn-warning float-right">
+        <i class="fas fa-backward"></i>&nbsp;Voltar
+      </a>
+  </div>
+  </div>
+  <form [formGroup]="freqListForm">
+    <div class="card" style="box-shadow: 5px 5px 10px #000;">
+      <div class="card-header">
+        Conferência da Lista de Frequência.
+      </div>
+      <div class="card-body">
+        <div class="form-row col-md-12">
+          <div class="form-group col-md-1">
+            <label for="id">Matrícula:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="id"
+              formControlName="matricula"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="login">Login.:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="login"
+              formControlName="login"
+              />
+          </div>
+          <div class="form-group col-md-8" style="margin-top: 36px">
+            <div><button (click)="buscarUser()" class="btn btn-outline-info btn-sm"><i class="fas fa-search"></i>&nbsp;Buscar</button></div>
+          </div>
+        </div>
+
+       <div class="container mt-2">
+        <table class="table table-hover" >
+          <thead>
+            <tr class="bg-primary text-light">
+              <th>Nome</th>
+              <th>Dia</th>
+              <th>Data</th>
+              <th>Horário</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of frequencias">
+              <td>{{f.nome}}</td>
+              <td>{{f.dia_semana}}</td>
+              <td>{{f.data_mes}}</td>
+              <td>{{f.hora_dia}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </form>
+</div>

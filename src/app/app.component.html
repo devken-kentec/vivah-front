@@ -1,13 +1,13 @@
-<div class="col-12">
-<nav  class="navbar navbar-expand-lg navbar- bg-primary "> 
-<div class="ml-4">
-    <a class="navbar-brand" style="color: white; font-weight: bold;"><span style="color: #B0E0E6; font-size: 18pt;"><i class="fas fa-running"></i>&nbsp;Energy</span> for {{title}}</a>
+<div class="col-md-12" >
+<nav  class="navbar navbar-expand-lg navbar- bg-primary ">
+<div class="ml-2">
+    <a class="navbar-brand" style="color: white; font-weight: bold;"><span style="color: #B0E0E6; font-size: 16pt;"><i class="fas fa-biking"></i>&nbsp;Energy</span> for {{title}}</a>
 </div>
 </nav>
-<nav *ngIf="mostrarMenu" class="navbar navbar-expand-lg navbar-light bg-light mb-4 col-12"> 
+<nav *ngIf="mostrarMenu" class="navbar navbar-expand-lg navbar-light bg-light mb-4 col-12">
     <div class="btn-group dropdown" id="btn-menu">
       <button type="button" class="btn btn-outline-info my-2 my-sm-0 dropdown-toggle ml-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bars">&nbsp;</i>
+        <i class="fas fa-bars">&nbsp;</i> Menu
       </button>
       <div  class="dropdown-menu" style="width: 350px;" id="menu">
           <div class="cabeca">Olá!<span style="color: red; font-weight: bold;"> {{ user }}</span>, seu perfil e de <span style="color:green; font-weight: bold;">{{ tipo }}</span>.</div>
@@ -15,48 +15,45 @@
           <a *ngIf="visiExe" class="dropdown-item" routerLink="/exercicio" id="exe"><i class="fas fa-edit"></i>&nbsp;Cadastro de exercícios</a>
           <a *ngIf="visiFicTec" class="dropdown-item" routerLink="/fichatecnica" id="ficTec"><i class="fas fa-list-alt"></i>&nbsp;Ficha técnica</a>
           <a *ngIf="visiFreq" class="dropdown-item" routerLink="/frequencia" id="freq"><i class="fas fa-check-circle"></i>&nbsp;Frequência dos alunos</a>
+          <a *ngIf="visiFreq" class="dropdown-item" routerLink="/frequencia/listarfrequencia" id="listfreq"><i class="fas fa-user-check"></i>&nbsp;Listar de Frequência</a>
           <a *ngIf="visiMens" class="dropdown-item" routerLink="/mensalidade" id="mens"><i class="fas fa-hand-holding-usd"></i>&nbsp;Mensalidade</a>
+          <a *ngIf="visiMens" class="dropdown-item" routerLink="/senha" id="senha"><i class="fas fa-key"></i>&nbsp;Senhas</a>
+          <a *ngIf="visiMens" class="dropdown-item" routerLink="/relatoriofinanceiro" id="relFin"><i class="fas fa-file-invoice-dollar"></i>&nbsp;Relátorio de Financeiro</a>
+          <a *ngIf="visiCon" class="dropdown-item" routerLink="/relatorioexercicios/consultaExer" id="consExer"><i class="fas fa-dumbbell"></i>&nbsp;Consulta lista de exercícios</a>
+          <a  type="button" class="dropdown-item" data-toggle="modal" data-target="#ModalParcela"id="lincenca"><i class="fas fa-certificate"></i>&nbsp;Sobre</a>
           <div class="dropdown-divider"></div>
           <div class="col-12 d-flex justify-content-center">
               <button type="submit" (click)="exit()" class="btn btn-danger col-md-10"  name="sair">Sair&nbsp;<i class="fas fa-sign-out-alt"></i></button>
           </div>
       </div>
   </div>
-
-  <!--<div>
-        <button class="btn btn-outline-info my-2 my-sm-0 dropdown-toggle" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" 
-        aria-expanded="false" aria-controls="multiCollapseExample2"><i class="fas fa-bars">&nbsp;</i></button>
-      <div class="row">
-        <div class="col">
-          <div class="collapse multi-collapse" id="multiCollapseExample2">
-            <div class="card card-body">
-                <div   id="menu">
-                    <div class="cabeca">Olá, {{ user }}, seu perfil e de {{ tipo }}.</div>
-                    <a *ngIf="visiCad" class="dropdown-item " routerLink="/cadastro" id="cad">Cadastro de alunos</a>
-                    <a *ngIf="visiExe" class="dropdown-item" routerLink="/exercicio" id="exe">Cadastro de exercícios</a>
-                    <a *ngIf="visiFicTec" class="dropdown-item" routerLink="/fichatecnica" id="ficTec">Ficha técnica</a>
-                    <a *ngIf="visiFreq" class="dropdown-item" routerLink="/frequencia" id="freq">Frequência dos alunos</a>
-                    <a *ngIf="visiMens" class="dropdown-item" routerLink="/mensalidade" id="mens">Mensalidade</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="col-12 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-danger col-md-10" data-toggle="modal" name="sair">Sair</button>
-                    </div>
-                </div>
-            </div>
+      <!-- Modal --> <!--//arrumar aqui-->
+      <div class="modal fade" id="ModalParcela" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="TituloModalCentralizado">
+            </h5>
+          </div>
+          <div class="modal-body" style="font-size: 10pt; text-align: center;">
+            <h5 style="font-weight: bold; text-align: center;">Termo de uso do sistema.</h5>
+              <span style="color: red; font-weight: bold;">&lt;KEN</span><span style="color:black; font-weight: bold;">TEC&#47;&gt;</span><br/>
+              <span>Soluções em Informática</span><br/>
+              <span >CNPJ: 34.062.698/0001-91</span><br/>
+              <span>Sistema: ENERGY - Gestão de Academias</span><br/>
+              <span>{{ licenca }}</span><br/>
+              <span>Versão: 3.22</span><br/>
+              <!--(kentec-segundosistema-nomedosistema-nomedaempresa-primeiracopia)HEX-->
+              <span style="font-weight: bold; text-align: center; color: blue;">ESPAÇO VIVAH</span>
+          </div>
+          <div class="modal-footer">
           </div>
         </div>
       </div>
-  </div>-->
-
+    </div>
+    <!--Fim da modal-->
 </nav>
 </div>
 <div class="container">
     <router-outlet></router-outlet>
 </div>
-
-
-
-
-
-
-

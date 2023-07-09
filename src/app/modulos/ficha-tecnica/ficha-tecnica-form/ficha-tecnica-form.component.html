@@ -6,11 +6,11 @@
       <li class="breadcrumb-item active">Ficha Técnica</li>
     </ol>
   </nav>
-  
+
   <div class="row mb-4">
     <div class="col-md">
       <h1 class="h2 border-left pl-2">
-        Ficha Técnica dos alunos
+        Ficha Técnica dos Alunos
       </h1>
     </div>
     <div class="col-md">
@@ -23,10 +23,11 @@
     Operação realizada com sucesso!!!
   </div>
   <form [formGroup]="ficTecForm">
-    <div class="card">
+    <div class="card" style="box-shadow: 5px 5px 10px #000;">
       <div class="card-header">
         Ficha para Informações técnicas e historico de evolução dos alunos!
       </div>
+
       <div class="card-body">
         <div class="form-row col-md-12">
           <div class="form-group col-md-1">
@@ -69,7 +70,7 @@
               <label for="peso">Peso:</label>
               <input type="number" class="form-control" id="peso" formControlName="peso" style="text-align: right;"/>
           </div>
-        </div> 
+        </div>
         <div class="form-row col-md-12">
           <div class="form-group col-md-3">
             <label for="hEnt">Hora da entrada:</label>
@@ -128,7 +129,7 @@
             <textarea class="form-control" id="descricao" rows="4" formControlName="descricao"></textarea>
           </div>
         </div>
-        <div class="form-row col-md-12 d-flex justify-content-between"> 
+        <div class="form-row col-md-12 d-flex justify-content-between">
         <div class="form-group col-md-2">
           <label for="situacao">Situação:</label>
           <select
@@ -148,6 +149,7 @@
         </div>
       </div>
       </div>
+
     </div>
   </form>
   <div class="row">
@@ -156,10 +158,5 @@
         <i class="fas fa-save"></i> &nbsp; Salvar
       </button>
     </div>
-  
   </div>
-
-  <pre>
-    {{ ficTecForm.value | json }}  
-  </pre>  
 </div>

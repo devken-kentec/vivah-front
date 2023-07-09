@@ -1,10 +1,8 @@
 import { Usuario } from './usuario';
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { tap, take } from 'rxjs/operators';
-
-
+import { take } from 'rxjs/operators';
 
 
 @Injectable({
@@ -13,13 +11,10 @@ import { tap, take } from 'rxjs/operators';
 export class AuthService {
 
   //PHP
-  private readonly api = `${environment.api}/login/`;
+  private readonly api = `${environment.api}`;
 
   private loggedInStatus: boolean = false;
  
-
-
-  //@Output() mostrarMenu: EventEmitter<string> = new EventEmitter<string>();
   mostrarMenuEmitter = new EventEmitter<boolean>();
   gUser = new EventEmitter<string>();
   gTipo = new EventEmitter<string>();
@@ -41,11 +36,8 @@ export class AuthService {
   }
 
   buscaUsuario(usuario){
-    return this.http.get<Usuario[]>(`${this.api}login.php?login="${usuario.login}"&senha=${usuario.senha}`).pipe(
-      tap(console.log),
+    return this.http.get<Usuario[]>(`${this.api}/login.php?login="${usuario.login}"&senha=${usuario.senha}`).pipe(
       take(1)
       );
   }
-
- 
 }

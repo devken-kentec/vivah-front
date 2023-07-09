@@ -21,7 +21,7 @@ export class MensalidadeFormComponent implements OnInit {
   statusPag: string;
   parcelas: Parcela[];
   valorFloat: number;
-  pagarIdFf: string;
+  pegarIdFf: string;
  
   
   constructor(private fb: FormBuilder,
@@ -32,7 +32,6 @@ export class MensalidadeFormComponent implements OnInit {
   ngOnInit() {
 
     const routeParams = this.route.snapshot.params;
-    console.log(routeParams.id);
 
     this.mensForm = this.fb.group({
       matricula: ['',[]],
@@ -60,24 +59,24 @@ export class MensalidadeFormComponent implements OnInit {
       id_ficha_financeira: ['',[]],
     });
 
-    
-    this.mensalidadeService.loadById(routeParams.id).subscribe((mensalidade:any)=>{
-      console.log(mensalidade),
-      this.mostrar = true,
-      this.updateFicFinForm(mensalidade),
-      this.mostBtnParc = true,
-      this.mensForm.get("id_aluno").setValue(mensalidade.matricula),
-      this.pagarIdFf = mensalidade.id,
-      this.listParc(mensalidade.id),
-      this.valorFloat = parseFloat(mensalidade.valor_mensal)
-    
+    if(routeParams.id != null){
+      this.mensalidadeService.loadById(routeParams.id).subscribe((mensalidade:any)=>{
+        this.mostrar = true,
+        this.updateFicFinForm(mensalidade),
+        this.mostBtnParc = true,
+        this.mensForm.get("id_aluno").setValue(mensalidade.matricula),
+        this.pegarIdFf = mensalidade.id,
+        this.listParc(mensalidade.id),
+        this.valorFloat = parseFloat(mensalidade.valor_mensal)
+      
+      });
     }
-    );
+    
   }
 
   addParcela(){
     this.parcForm.get("valor").setValue(this.valorFloat);
-    this.parcForm.get("id_ficha_financeira").setValue(this.pagarIdFf);
+    this.parcForm.get("id_ficha_financeira").setValue(this.pegarIdFf);
     this.statusPag ="A receber";
     this.parcForm.get("status_parc").setValue(this.statusPag);
   }
@@ -125,7 +124,6 @@ export class MensalidadeFormComponent implements OnInit {
     this.mensForm.get("login").disable();
     this.mensForm.get("nome").disable();
     this.mensForm.get("cpf").disable();
-    console.log(this.mensForm.value);
     if(this.mensForm.valid){
         this.mensalidadeService.save(this.mensForm.value).subscribe(
           success=>{console.log("Ficha financeira incluida com sucessso"),
@@ -148,7 +146,7 @@ export class MensalidadeFormComponent implements OnInit {
         );
     } 
     this.parcForm.reset();
-    this.parcForm.get("id_ficha_financeira").setValue(this.pagarIdFf);
+    this.parcForm.get("id_ficha_financeira").setValue(this.pegarIdFf);
   }
 
   close(){
@@ -174,9 +172,11 @@ export class MensalidadeFormComponent implements OnInit {
     this.parcForm.get("obs").setValue(parcela.obs);
     this.parcForm.get("status_parc").setValue(parcela.status_parc);
     this.statusPag = this.parcForm.get("status_parc").value;
-    this.parcForm.get("id_ficha_financeira").setValue(this.pagarIdFf)
+    this.parcForm.get("id_ficha_financeira").setValue(this.pegarIdFf)
     this.valorTotal();
   }
 
- 
+ onDelete(){
+   
+ }
 }

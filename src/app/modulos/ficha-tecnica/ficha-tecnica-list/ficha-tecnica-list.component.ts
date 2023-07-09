@@ -39,12 +39,12 @@ export class FichaTecnicaListComponent implements OnInit {
     );
   }
 
-  buscaAluno(){
-   
+  buscarAluno(){
+
     this._fichaTecnicaService.loadByPesquisa(this.ficTecListForm.get('login').value).subscribe(
       res => { console.log(res),
               this.fichasTecnica = res
-              } 
+              }
       );
   }
 
@@ -52,7 +52,7 @@ export class FichaTecnicaListComponent implements OnInit {
     this.router.navigate(['editar', id], {relativeTo: this.route});
   }
 
-  pegaDados(id, nome){  
+  pegaDados(id, nome){
     this._nome = nome;
     this._id = id;
  }

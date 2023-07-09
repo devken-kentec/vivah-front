@@ -19,7 +19,7 @@
     </div>
   </div>
    <div class="col-12">
-    <table class="table table-hover" *ngIf="exercicios else loading">
+    <table class="table table-hover" *ngIf="exercicios else loading" style="box-shadow: 5px 5px 10px #000;">
       <thead>
         <tr class="bg-primary text-light">
           <th>#</th>
@@ -78,14 +78,6 @@
         <h5 class="modal-title" id="TituloModalCentralizado">
           Vamos lá!
         </h5>
-        <!--button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Fechar"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button-->
       </div>
       <div class="modal-body" style="font-weight: bold;">
         Deseja excluir o registro de {{_nome}} ?

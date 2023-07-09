@@ -13,6 +13,7 @@ export interface FichaTecnica {
     sab: string,
     descricao: string,
     status_ft: string,
-    id_aluno: string
-    
+    id_aluno: string,
+    nome: string,
+    login: string
 }

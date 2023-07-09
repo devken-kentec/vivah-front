@@ -28,14 +28,10 @@ export class FichaTecnicaFormComponent implements OnInit {
   ngOnInit() {
 
     const routeParams = this.route.snapshot.params;
-    console.log(routeParams.id)
-
-  
 
     this.ficTecForm = this.fb.group({
-      id: ['',[]],
       matricula: ['',[]],
-      login: ['',[]],
+      id: ['',[]],
       data_avaliacao: ['',[]],
       peso: ['',[]],
       hora_entrada: ['',[]],
@@ -51,16 +47,16 @@ export class FichaTecnicaFormComponent implements OnInit {
       id_aluno: ['',[]]
     });
 
-    this.fichaTecnicaService.loadById(routeParams.id).subscribe((fichaTecnica: any)=>{
-      console.log(fichaTecnica),
-      this.id_fic_tec = fichaTecnica.id,
-      this.nome = fichaTecnica.nome,
-      this.updateFicTecForm(fichaTecnica),
-      this.mostrar = true,
-      this.mostBtnExer = true,
-      this.ficTecForm.get("id_aluno").setValue(fichaTecnica.matricula)
-     
-    });
+    if(routeParams.id != null){
+      this.fichaTecnicaService.loadById(routeParams.id).subscribe((fichaTecnica: any)=>{
+        this.id_fic_tec = fichaTecnica.id,
+        this.nome = fichaTecnica.nome,
+        this.updateFicTecForm(fichaTecnica),
+        this.mostrar = true,
+        this.mostBtnExer = true,
+        this.ficTecForm.get("id_aluno").setValue(fichaTecnica.matricula)
+      });
+    }
   }
 
   updateFicTecForm(fichaTecnica){
@@ -68,9 +64,8 @@ export class FichaTecnicaFormComponent implements OnInit {
   }
 
   incluirUser(){
-
-    this._selectService.buscaUsuario(this.ficTecForm.value).subscribe(
-      data =>{ this.id = data.matricula,
+    this._selectService.buscaUsuario(this.ficTecForm.value).subscribe((data: any) =>{
+               this.id = data.matricula,
                this.nome = data.nome,
                this.mostrar = true,
                this.ficTecForm.get("id_aluno").setValue(this.id)
@@ -81,7 +76,6 @@ export class FichaTecnicaFormComponent implements OnInit {
   onSubmit(){
     this.ficTecForm.get("matricula").disable();
     this.ficTecForm.get("login").disable();
-    console.log(this.ficTecForm.value);
 
     if(this.ficTecForm.valid){
       this.fichaTecnicaService.save(this.ficTecForm.value).subscribe(
@@ -97,8 +91,6 @@ export class FichaTecnicaFormComponent implements OnInit {
 
   incluirExer(){
     let _id = this.ficTecForm.get("id").value;
-    console.log(_id);
     this.router.navigate(["/listaexercicio/new", _id], {relativeTo: this.route});
-    
   }
 }

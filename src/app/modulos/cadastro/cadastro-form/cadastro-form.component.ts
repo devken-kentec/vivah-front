@@ -3,9 +3,7 @@ import { AuthService } from './../../login/shared/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { CadastroService } from './../shared/cadastro.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { map, switchMap } from 'rxjs/operators';
-import { Cadastro } from '../shared/cadastro';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -20,22 +18,19 @@ export class CadastroFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
               private _cadastroService: CadastroService,
-              private route: ActivatedRoute,
-              private _authService: AuthService
+              private route: ActivatedRoute
               ) { }
 
   ngOnInit() {
 
     const routeParams = this.route.snapshot.params;
-    console.log(routeParams.id)
-
-    this._cadastroService.loadById(routeParams.id).subscribe((cadastro: any)=> {
-      console.log(cadastro),
-  
-      this.updateCadForm(cadastro)
-    });
-
     
+    if(routeParams.id != null){
+      this._cadastroService.loadById(routeParams.id).subscribe((cadastro: any)=> {
+        this.updateCadForm(cadastro)
+      });
+    }
+        
     //Primeiro metodo para buscar o registro por ID***.
    /* this.route.params.subscribe((params: any) => {
         const id = params['id'];
@@ -95,8 +90,6 @@ export class CadastroFormComponent implements OnInit {
     };
 
     onSumit(){
-
-    
       if(this.cadForm.valid){
         this._cadastroService.save(this.cadForm.value).subscribe(
           success => {console.log("Aluno salva com sucesso!"),

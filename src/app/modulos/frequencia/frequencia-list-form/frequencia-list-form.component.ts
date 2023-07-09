@@ -1,7 +1,9 @@
+import { FrequenciaService } from './../shared/frequencia.service';
 import { Usuario } from './../../selects/usuario';
 import { SelectsService } from './../../selects/selects.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-frequencia-list-form',
@@ -20,9 +22,13 @@ export class FrequenciaListFormComponent implements OnInit {
   semana: string;
   hora: string;
   data_mes: string;
+  mostrarMens = false;
 
   constructor(private fb: FormBuilder,
-              private _selectService: SelectsService) { }
+              private _selectService: SelectsService,
+              private frequenciaService: FrequenciaService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -40,11 +46,9 @@ export class FrequenciaListFormComponent implements OnInit {
     });
   }
 
-  
-
   buscaUser(){
     this._selectService.buscaUsuario(this.freqForm.value).subscribe(
-      dados => { this.id = dados.matricula, 
+      (dados:any) => { this.id = dados.matricula, 
                 this.nome = dados.nome,
                 this.semana = this.dias[this.data.getDay()],
                 this.data_mes = this.data.getDate() + '/' + (this.data.getMonth()+1) + '/' + this.data.getFullYear(),
@@ -60,7 +64,18 @@ export class FrequenciaListFormComponent implements OnInit {
   }
 
     onSubmit(){
-      console.log(this._freqForm.value);
+
+      let id = this._freqForm.get("id_aluno").value;
+      let diaSemana = this._freqForm.get("dia_semana").value;
+
+      if(this._freqForm.valid){
+      this.frequenciaService.create(this._freqForm.value).subscribe(     
+        success=>{console.log("Ficha Técnica incluida com sucesso"),
+        this.mostrarMens = true;
+    });
+    }
+
+    
       this.freqForm.reset();
       this._freqForm.reset();
       this.data = new Date();
@@ -70,6 +85,8 @@ export class FrequenciaListFormComponent implements OnInit {
       this.semana = "";
       this.data_mes = "";
       this.hora = "";
+
+      this.router.navigate(['relatorioexercicios/buscar', id, diaSemana]);
     }
 
 }
